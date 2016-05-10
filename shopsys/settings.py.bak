@@ -16,12 +16,11 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SETTINGS_DIR = os.path.dirname(__file__)
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&7$+vau=@k$e+77k23u=4o9@yw_jx(hpgqn20)mge_a$frjd!q'
+SECRET_KEY = 'ao#neh4$it@426fphjeqe$l^#0j7j3ws_lx@_1*c66c9xb-!3t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,8 +38,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shopsys.apps.catalog',
-    'shopsys.apps.cart',
-    'django-groundwork',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -60,14 +57,13 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-               os.path.join(SETTINGS_DIR, 'templates')
+            os.path.join(SETTINGS_DIR, 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'shopsys.utils.context_processors.shopsys',
@@ -84,15 +80,16 @@ WSGI_APPLICATION = 'shopsys.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
+        #  'ENGINE': 'mysql.connector.django', # mysqlclient上这样写的，不需要
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'shopsys',
-        'USER': 'shopsys',
-        'PASSWORD': '12345678',
+        'NAME': 'shopsys',       # 数据库名
+        'USER': 'shopsys',       # 数据库账户名
+        'PASSWORD': '12345678',  # 数据库密码，为安全起见，应从系统环境变量读取
+                                 # 例如os.environ['SHOPSYS_DB_PASS']
+        'HOST': '127.0.0.1',     # 数据库服务器IP
+        'PORT': '3306',          # 数据库服务端口
+        'TEST': {}               # 测试数据库配置
 
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-        'TEST': {}
     }
 }
 
@@ -119,18 +116,11 @@ USE_ETAGS = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-# 生产环境静态资源的配置
-# https://docs.djangoproject.com/en/1.9/howto/static-files/deployment/
 
-# 在给定的路径中寻找静态资源
-STATICFILES_DIRS = (
-    os.path.join(SETTINGS_DIR, 'static'),
-)
 STATIC_URL = '/static/'
-
-# 用户上传文件位置
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+#  STATICFILES_DIRS = (
+    #  SETTINGS_DIR + '/static/',
+#  )
 
 # 站点设置
 SITE_NAME = '小白购'
